@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe Rubyrubi::Parser::Base do
 
   let(:response) do

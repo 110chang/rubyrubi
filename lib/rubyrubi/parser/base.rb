@@ -1,6 +1,7 @@
 module Rubyrubi
   module Parser
-    KANJI = /[[一-龠]+]/
+    KANJI = /^[一-龠]+/
+    OKURI = /\p{hiragana}$/
 
     class Base
       def initialize(result)
@@ -11,26 +12,25 @@ module Rubyrubi
       end
 
       def parse()
-        new_data = []
-        @original.each do |word|
-          new_data.push(add_rubi_and_okuri(word))
+        new_data = @original.map do |word|
+          add_rubi_and_okuri(word)
         end
         create_markup(new_data)
       end
 
       def add_rubi_and_okuri(word)
         #p word
-        new_word = word.clone
-        word['surface'].scan(KANJI) do |matched|
-          okuri = word['surface'].split(matched)[1] || ''
-          rubi = okuri != '' ? word['reading'].split(okuri)[0] : word['reading']
-          new_word = new_word.merge({
-            'kanji' => matched,
-            'okuri' => okuri,
-            'rubi' => rubi
-          })
-        end
-        new_word
+        kanji = word['surface'].scan(KANJI)[0]
+        okuri = word['surface'].scan(OKURI)[0]
+        rubi = kanji == nil && okuri == nil ? nil
+          : word['reading'].gsub(Regexp.new("#{okuri}$"), '')
+
+        new_word = word.clone.merge({
+          'kanji' => kanji,
+          'okuri' => okuri,
+          'rubi' => rubi
+        })
+        new_word.keep_if { |k, v| v }
       end
 
       def create_markup(data)

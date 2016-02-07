@@ -1,7 +1,7 @@
 require 'uri'
+require 'net/https'
 require 'active_support'
 require 'active_support/core_ext'
-require 'net/https'
 
 module Rubyrubi
   class API

@@ -19,7 +19,7 @@ describe Rubyrubi::Client do
   end
 
   describe '#furu' do
-    it 'returns xml' do
+    it 'rubyタグを返す' do
       result = "<ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>い<ruby>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>、<ruby>白<rp>（</rp><rt>しろ</rt><rp>）</rp></ruby>い<ruby>雲<rp>（</rp><rt>くも</rt><rp>）</rp></ruby>"
       expect(instance.furu(text)).to eq result
     end
