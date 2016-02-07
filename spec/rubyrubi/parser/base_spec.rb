@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe Rubyrubi::Parser::Base do
 
   let(:response) do
@@ -16,9 +17,12 @@ describe Rubyrubi::Parser::Base do
 
   describe '#parse' do
     it 'returns new results' do
-      before = [{"surface"=>"青い", "reading"=>"あおい", "pos"=>"形容詞"}, {"surface"=>"空", "reading"=>"そら", "pos"=>"名詞"}, {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}, {"surface"=>"白い", "reading"=>"しろい", "pos"=>"形容詞"}, {"surface"=>"雲", "reading"=>"くも", "pos"=>"名詞"}]
-      after = [{"surface"=>"青い", "reading"=>"あおい", "pos"=>"形容詞", "kanji"=>"青", "okuri"=>"い", "rubi"=>"あお"}, {"surface"=>"空", "reading"=>"そら", "pos"=>"名詞", "kanji"=>"空", "okuri"=>nil, "rubi"=>"そら"}, {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}, {"surface"=>"白い", "reading"=>"しろい", "pos"=>"形容詞", "kanji"=>"白", "okuri"=>"い", "rubi"=>"しろ"}, {"surface"=>"雲", "reading"=>"くも", "pos"=>"名詞", "kanji"=>"雲", "okuri"=>nil, "rubi"=>"くも"}]
-      expect(instance.parse(before)).to eq after
+      markup = ["<ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>い",
+       "<ruby>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>",
+       "、",
+       "<ruby>白<rp>（</rp><rt>しろ</rt><rp>）</rp></ruby>い",
+       "<ruby>雲<rp>（</rp><rt>くも</rt><rp>）</rp></ruby>"]
+      expect(instance.parse()).to eq markup
     end
   end
 

@@ -14,17 +14,14 @@ describe Rubyrubi::Client do
     '青い空、白い雲'
   end
 
-  let(:response) do
-    Hash.from_xml(File.read(File.expand_path('./spec/responce.xml', Dir.pwd))).to_json
-  end
-
   it 'is exist' do
     expect(instance).not_to be nil
   end
 
   describe '#furu' do
     it 'returns xml' do
-      expect(instance.furu(text).to_json).to eq response
+      result = "<ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>い<ruby>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>、<ruby>白<rp>（</rp><rt>しろ</rt><rp>）</rp></ruby>い<ruby>雲<rp>（</rp><rt>くも</rt><rp>）</rp></ruby>"
+      expect(instance.furu(text)).to eq result
     end
   end
 end

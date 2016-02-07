@@ -1,5 +1,4 @@
 require 'uri'
-require 'cgi'
 require 'active_support'
 require 'active_support/core_ext'
 require 'net/https'
@@ -20,8 +19,16 @@ module Rubyrubi
         }.to_param
         #p uri
 
+        load_xml(uri)
+      end
+
+      private
+
+      def load_xml(uri)
         http = Net::HTTP.new(uri.host, uri.port)
-        responce = http.post(uri.path, uri.query, {'Content-type' => 'application/x-www-form-urlencoded'})
+        responce = http.post(uri.path, uri.query, {
+          'Content-type' => 'application/x-www-form-urlencoded'
+        })
 
         Hash.from_xml(responce.body)
       end
