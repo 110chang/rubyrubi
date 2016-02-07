@@ -23,6 +23,12 @@ describe Rubyrubi::Parser::Base do
        "<ruby>雲<rp>（</rp><rt>くも</rt><rp>）</rp></ruby>"]
       expect(instance.parse()).to eq markup
     end
+    it '“大きな空”を変換' do
+      instance = described_class.new(Hash.from_xml('<?xml version="1.0" encoding="UTF-8" ?><ResultSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:yahoo:jp:jlp" xsi:schemaLocation="urn:yahoo:jp:jlp http://jlp.yahooapis.jp/MAService/V1/parseResponse.xsd"><ma_result><total_count>2</total_count><filtered_count>2</filtered_count><word_list><word><surface>大きな</surface><reading>おおきな</reading><pos>連体詞</pos></word><word><surface>空</surface><reading>そら</reading><pos>名詞</pos></word></word_list></ma_result><uniq_result><total_count>2</total_count><filtered_count>2</filtered_count><word_list><word><count>1</count><surface>大きな</surface><reading/><pos>連体詞</pos></word><word><count>1</count><surface>空</surface><reading/><pos>名詞</pos></word></word_list></uniq_result></ResultSet>'))
+      markup = ["<ruby>大<rp>（</rp><rt>おお</rt><rp>）</rp></ruby>きな",
+       "<ruby>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>"]
+      expect(instance.parse()).to eq markup
+    end
   end
 
   describe '#add_rubi_and_okuri' do
@@ -35,6 +41,12 @@ describe Rubyrubi::Parser::Base do
     it 'returns nothing if words are symbol' do
       before = {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}
       after = {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}
+      expect(instance.add_rubi_and_okuri(before)).to eq after
+    end
+
+    it '“大きな”を変換' do
+      before = {"surface"=>"大きな", "reading"=>"おおきな", "pos"=>"連体詞"}
+      after = {"surface"=>"大きな", "reading"=>"おおきな", "pos"=>"連体詞", "kanji"=>"大", "okuri"=>"きな", "rubi"=>"おお"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
   end

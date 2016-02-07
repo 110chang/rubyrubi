@@ -1,7 +1,7 @@
 module Rubyrubi
   module Parser
     KANJI = /^[一-龠]+/
-    OKURI = /\p{hiragana}$/
+    OKURI = /[\p{hiragana}]+$/
 
     class Base
       def initialize(result)
