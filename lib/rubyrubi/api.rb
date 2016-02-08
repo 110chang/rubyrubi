@@ -14,7 +14,8 @@ module Rubyrubi
         uri.query = {
           appid: app_id,
           filter: [*1..13].join('|'),
-          results: 'ma,uniq',
+          results: 'ma',
+          ma_response: 'surface,reading,pos,feature',
           sentence: text,
         }.to_param
         #p uri
@@ -35,6 +36,5 @@ module Rubyrubi
     end
   end
 end
-
 
 

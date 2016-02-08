@@ -61,6 +61,12 @@ describe Rubyrubi::Parser::Base do
       after = {"surface"=>"ナカグ・ロー", "reading"=>"", "pos"=>"名詞"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
+
+    it '固名商品は変換しないで返す' do
+      before = {"surface"=>"進研ゼミ", "reading"=>"", "pos"=>"名詞", "feature"=>"名詞,固名商品,*,進研ゼミ,しんけんぜみ,進研ゼミ"}
+      after = {"surface"=>"進研ゼミ", "reading"=>"", "pos"=>"名詞", "feature"=>"名詞,固名商品,*,進研ゼミ,しんけんぜみ,進研ゼミ"}
+      expect(instance.add_rubi_and_okuri(before)).to eq after
+    end
   end
 end
 

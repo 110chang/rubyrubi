@@ -2,6 +2,7 @@ module Rubyrubi
   module Parser
     KANJI = /^[一-龠]+/
     OKURI = /[\p{hiragana}\p{katakana}ー〜]+$/
+    KOMEI = /固名商品/
 
     class Base
       def initialize(result)
@@ -20,10 +21,16 @@ module Rubyrubi
 
       def add_rubi_and_okuri(word)
         #p word
+        if word['feature'] && word['feature'].scan(KOMEI).size > 0
+          return word.clone
+        end
+
         kanji = word['surface'].scan(KANJI)[0]
+
         if kanji == nil
           return word.clone
         end
+
         okuri = word['surface'].scan(OKURI)[0]
         rubi = kanji == nil && okuri == nil ? nil
           : word['reading'].gsub(Regexp.new("#{okuri}$"), '')
