@@ -1,9 +1,10 @@
+require 'yaml'
 require 'spec_helper'
 
 describe Rubyrubi::API do
 
   let(:app_id) do
-    'dj0zaiZpPU01NnFBTDZLYVBkeiZzPWNvbnN1bWVyc2VjcmV0Jng9Njk-'
+    YAML.load_file(File.expand_path('./spec/spec_config.yml', Dir.pwd))['api_key']
   end
 
   let(:text) do
