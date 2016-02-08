@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["u@110chang.com"]
 
   spec.summary       = %q{Add furigana to japanese “kanji”}
-  spec.description   = %q{Add furigana to japanese “kanji”}
+  spec.description   = %q{Yahoo!形態素解析を利用して文字列を解析し、ルビ関係のタグを振って返します。}
   spec.homepage      = "https://github.com/110chang/rubyrubi"
   spec.license       = "MIT"
 
