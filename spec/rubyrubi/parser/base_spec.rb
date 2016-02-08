@@ -49,6 +49,18 @@ describe Rubyrubi::Parser::Base do
       after = {"surface"=>"大きな", "reading"=>"おおきな", "pos"=>"連体詞", "kanji"=>"大", "okuri"=>"きな", "rubi"=>"おお"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
+
+    it '“共通モジュール”を変換' do
+      before = {"surface"=>"共通モジュール", "reading"=>"きょうつう", "pos"=>"名詞"}
+      after = {"surface"=>"共通モジュール", "reading"=>"きょうつう", "pos"=>"名詞", "kanji"=>"共通", "okuri"=>"モジュール", "rubi"=>"きょうつう"}
+      expect(instance.add_rubi_and_okuri(before)).to eq after
+    end
+
+    it '“ナカグ・ロー”を変換' do
+      before = {"surface"=>"ナカグ・ロー", "reading"=>"", "pos"=>"名詞"}
+      after = {"surface"=>"ナカグ・ロー", "reading"=>"", "pos"=>"名詞"}
+      expect(instance.add_rubi_and_okuri(before)).to eq after
+    end
   end
 end
 

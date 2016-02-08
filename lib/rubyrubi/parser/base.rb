@@ -1,7 +1,7 @@
 module Rubyrubi
   module Parser
     KANJI = /^[一-龠]+/
-    OKURI = /[\p{hiragana}]+$/
+    OKURI = /[\p{hiragana}\p{katakana}ー〜]+$/
 
     class Base
       def initialize(result)
@@ -21,6 +21,9 @@ module Rubyrubi
       def add_rubi_and_okuri(word)
         #p word
         kanji = word['surface'].scan(KANJI)[0]
+        if kanji == nil
+          return word.clone
+        end
         okuri = word['surface'].scan(OKURI)[0]
         rubi = kanji == nil && okuri == nil ? nil
           : word['reading'].gsub(Regexp.new("#{okuri}$"), '')
