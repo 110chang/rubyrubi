@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Rubyrubi::Parser::Base do
 
   let(:response) do
-    Hash.from_xml(File.read(File.expand_path('./spec/responce.xml', Dir.pwd)))
+    Hash.from_xml(File.read(File.expand_path('./spec/fixtures/api_responce_1.xml', Dir.pwd)))
   end
 
   let(:instance) do
@@ -32,31 +32,31 @@ describe Rubyrubi::Parser::Base do
   end
 
   describe '#add_rubi_and_okuri' do
-    it 'returns new results' do
+    it '漢字、送り仮名、ルビのデータを付与する' do
       before = {"surface"=>"青い", "reading"=>"あおい", "pos"=>"形容詞"}
       after = {"surface"=>"青い", "reading"=>"あおい", "pos"=>"形容詞", "kanji"=>"青", "okuri"=>"い", "rubi"=>"あお"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
 
-    it 'returns nothing if words are symbol' do
+    it '特殊文字にはなにもしない' do
       before = {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}
       after = {"surface"=>"、", "reading"=>"、", "pos"=>"特殊"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
 
-    it '“大きな”を変換' do
+    it '送り仮名が1文字以上でも正しくデータを付与する' do
       before = {"surface"=>"大きな", "reading"=>"おおきな", "pos"=>"連体詞"}
       after = {"surface"=>"大きな", "reading"=>"おおきな", "pos"=>"連体詞", "kanji"=>"大", "okuri"=>"きな", "rubi"=>"おお"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
 
-    it '“共通モジュール”を変換' do
+    it 'カタカナが混じっていても正しくデータを付与する' do
       before = {"surface"=>"共通モジュール", "reading"=>"きょうつう", "pos"=>"名詞"}
       after = {"surface"=>"共通モジュール", "reading"=>"きょうつう", "pos"=>"名詞", "kanji"=>"共通", "okuri"=>"モジュール", "rubi"=>"きょうつう"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
     end
 
-    it '“ナカグ・ロー”を変換' do
+    it '造語の場合はなにもしない' do
       before = {"surface"=>"ナカグ・ロー", "reading"=>"", "pos"=>"名詞"}
       after = {"surface"=>"ナカグ・ロー", "reading"=>"", "pos"=>"名詞"}
       expect(instance.add_rubi_and_okuri(before)).to eq after
