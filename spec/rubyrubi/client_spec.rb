@@ -30,5 +30,12 @@ describe Rubyrubi::Client do
       expect(instance.furu('大きな空')).to eq result
     end
   end
+
+  describe '#tag' do
+    it 'テキストとルビを与えるとタグを返す' do
+      result = "<ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>"
+      expect(instance.tag('青', 'あお')).to eq result
+    end
+  end
 end
 

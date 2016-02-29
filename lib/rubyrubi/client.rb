@@ -9,6 +9,10 @@ module Rubyrubi
       parser = Parser::Base.new(result)
       parser.parse().join('')
     end
+
+    def tag(text, ruby)
+      Parser.ruby_tag(text, ruby)
+    end
   end
 end
 
